@@ -8,14 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    var mockTests : [MockTestData] = MockTestDataList.TestList
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        
+        NavigationView{
+            List(mockTests, id: \.id) { mockTest in
+                
+                NavigationLink(
+                    destination: MockTestDetailView(mockTest: mockTest),
+                    label: {
+                        Image(mockTest.imageName).resizable().scaledToFit().frame(height: 100).padding(.horizontal, 7)
+                        VStack(alignment: .leading, spacing:25, content: {
+                            Text(mockTest.title).fontWeight(.medium).font(.headline)
+                            Text("\u{20B9} \(mockTest.sellPrice)").fontWeight(.medium).font(.subheadline)
+                        }).padding()
+                    })
+            }.navigationTitle("Mock Courses")
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+            ContentView()
+        }
     }
 }
